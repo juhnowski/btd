@@ -97,6 +97,20 @@ btd=# select * from _device;
 (10 rows)
 ```
 
+# Test
+## Setting up environment
+In terminal:
+```
+psql -U postgres
+```
+and:
+```
+CREATE DATABASE dart_test;
+CREATE USER dart WITH createdb;
+ALTER USER dart WITH password 'dart';
+GRANT all ON database dart_test TO dart;
+```
+
 # API
 ## Common
 Request Header should be:
