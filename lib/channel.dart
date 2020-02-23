@@ -21,9 +21,16 @@ class BtdChannel extends ApplicationChannel {
   @override
   Future prepare() async {
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-  
+
+    final config = BtdConfig(options.configurationFilePath);
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo("btdadmin", "btdadmin", "localhost", 5432, "btd");
+
+    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
+      config.database.username,
+      config.database.password,
+      config.database.host,
+      config.database.port,
+      config.database.databaseName);
 
     context = ManagedContext(dataModel, persistentStore);
   }
@@ -44,4 +51,9 @@ class BtdChannel extends ApplicationChannel {
 
     return router;
   }
+}
+
+class BtdConfig extends Configuration {
+  BtdConfig(String path): super.fromFile(File(path));
+  DatabaseConfiguration database;
 }

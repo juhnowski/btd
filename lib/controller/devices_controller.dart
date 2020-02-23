@@ -31,11 +31,16 @@ class DevicesController extends ResourceController {
   ];
 
   @Operation.get()
-  Future<Response> getAllDevices() async {
+  Future<Response> getAllDevices(@Bind.query('name') String name) async {
     final deviceQuery = Query<Device>(context);
-    final devices = await deviceQuery.fetch();
 
-    return Response.ok(_devices);
+    if (name != null) {
+      deviceQuery.where((d) => d.name).contains(name, caseSensitive: false);
+    }
+
+      final devices = await deviceQuery.fetch();
+
+    return Response.ok(devices);
   }
 
   @Operation.get('id')
@@ -50,6 +55,17 @@ class DevicesController extends ResourceController {
     }
 
     return Response.ok(device);
+  }
+
+  @Operation.post()
+  Future<Response> createDevice() async {
+    final device = Device()
+      ..read(await request.body.decode(), ignore: ["id"]);
+
+    final query = Query<Device>(context)..values = device;
+
+    final insertedDevice = await query.insert();
+    return Response.ok(insertedDevice);
   }
 
 //  @Operation.get()

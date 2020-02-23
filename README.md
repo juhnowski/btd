@@ -12,7 +12,13 @@ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 
+## About BTD
+Project site: https://sites.google.com/view/burntreatmentdevice/home
+
 ## Update 
+```
+git pull
+```
 
 ## Running the Application Locally
 
@@ -89,4 +95,40 @@ btd=# select * from _device;
   9 | mvp1234ZX2020#9
  10 | mvp1234ZX2020#10
 (10 rows)
+```
+
+# API
+## Common
+Request Header should be:
+```
+Content-Type: application/json
+```
+
+## Devices
+GET:
+```
+http://localhost:8888/devices/1
+http://localhost:8888/devices
+http://localhost:8888/devices?name=mvp1234ZX2020#1
+```
+
+POST:
+
+URL:
+```
+http://localhost:8888/devices
+```
+Body:
+```
+{
+  "name": "test"
+}
+```
+Error:
+```
+{'error':'entity_already_exists','detail':'Offending Items: _device.null'}
+```
+Ok:
+```
+{'id':13,'name':'test'}
 ```
