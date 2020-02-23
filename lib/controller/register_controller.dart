@@ -12,14 +12,29 @@
 // You should have received a copy of the GNU General Public License along with
 // this program. If not, see <https://www.gnu.org/licenses/>.
 
-import 'package:aqueduct/managed_auth.dart';
-import 'package:btd/btd.dart';
-import 'package:btd/model/Device.dart';
+import 'dart:async';
 
-class User extends ManagedObject<_User> implements _User,
-    ManagedAuthResourceOwner<_User> {
-  @Serialize(input: true, output: false)
-  String password;
+import 'package:aqueduct/aqueduct.dart';
+import 'package:btd/model/user.dart';
+
+class RegisterController extends ResourceController {
+  RegisterController(this.context, this.authServer);
+
+  final ManagedContext context;
+  final AuthServer authServer;
+
+  @Operation.post()
+  Future<Response> createUser(@Bind.body() User user) async {
+    if(user.username == null || user.password == null){
+      return Response.badRequest(
+        body: {"error":"username and password required"}
+      );
+    }
+
+    user
+      ..salt = AuthUtility.generateRandomSalt()
+      ..hashedPassword = authServer.hashPassword(user.password, user.salt);
+
+    return Response.ok(await Query(context, values: user).insert());
+  }
 }
-
-class _User extends ResourceOwnerTableDefinition {}

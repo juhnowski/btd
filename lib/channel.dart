@@ -16,6 +16,7 @@ import 'package:aqueduct/managed_auth.dart';
 import 'package:btd/model/user.dart';
 import 'btd.dart';
 import 'controller/devices_controller.dart';
+import 'package:btd/controller/register_controller.dart';
 
 class BtdChannel extends ApplicationChannel {
   ManagedContext context;
@@ -47,7 +48,12 @@ class BtdChannel extends ApplicationChannel {
     final router = Router();
 
     router
+      .route('auth/token')
+      .link(() => AuthController(authServer));
+
+    router
       .route('/devices/[:id]')
+      .link(() => Authorizer.bearer(authServer))
       .link(() => DevicesController(context));
 
     router
@@ -55,6 +61,11 @@ class BtdChannel extends ApplicationChannel {
       .linkFunction((request) async {
         return Response.ok({"key": "value"});
       });
+
+    router
+      .route('/register')
+      .link(() => Authorizer.bearer(authServer))
+      .link(() => RegisterController(context, authServer));
 
     return router;
   }

@@ -40,6 +40,15 @@ The default configuration file used when testing is `config.src.yaml`. This file
 
 See the documentation for [Deployment](https://aqueduct.io/docs/deploy/).
 
+# Administration
+## Add user
+```
+aqueduct auth add-client --id admin --connect postgres://btdadmin:btdadmin@localhost:5432/btd
+```
+then you may check the results by:
+- scripts/auth.sh
+- scripts/auth.dart
+
 # Development
 ## Dart
 One-time setup:
@@ -130,7 +139,7 @@ Content-Type: application/json
 GET:
 ```
 http://localhost:8888/devices/1
-http://localhost:8888/devices
+http://localhost:8888/devices?name=
 http://localhost:8888/devices?name=mvp1234ZX2020#1
 ```
 

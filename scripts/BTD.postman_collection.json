@@ -1,0 +1,114 @@
+{
+	"variables": [],
+	"info": {
+		"name": "BTD",
+		"_postman_id": "d81f73c5-3419-078f-9791-ffdda0d029bb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/auth/token",
+			"request": {
+				"url": "http://localhost:8888/auth/token",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "username=bob&password=password&grant_type=password"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/devices?name=",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8888/devices?name=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"devices"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer MZzb36jdKoH0EGMDOFGXYem7pIcYzMqy",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/devices/1",
+			"request": {
+				"url": "http://localhost:8888/devices/1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer MZzb36jdKoH0EGMDOFGXYem7pIcYzMqy",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/register",
+			"request": {
+				"url": "http://localhost:8888/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer MZzb36jdKoH0EGMDOFGXYem7pIcYzMqy",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"bob1\", \"password\":\"password1\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
