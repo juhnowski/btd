@@ -96,6 +96,10 @@ btd=# select * from _device;
  10 | mvp1234ZX2020#10
 (10 rows)
 ```
+If the data model has been changed, then you need to execute in the terminal
+```
+aqueduct db generate
+```
 
 # Test
 ## Setting up environment
@@ -110,7 +114,11 @@ CREATE USER dart WITH createdb;
 ALTER USER dart WITH password 'dart';
 GRANT all ON database dart_test TO dart;
 ```
-
+## Testing
+Start terminal and in project folder call:
+```
+pub run test
+```
 # API
 ## Common
 Request Header should be:

@@ -12,11 +12,15 @@
 // You should have received a copy of the GNU General Public License along with
 // this program. If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:aqueduct/managed_auth.dart';
+import 'package:btd/model/user.dart';
 import 'btd.dart';
 import 'controller/devices_controller.dart';
 
 class BtdChannel extends ApplicationChannel {
   ManagedContext context;
+
+  AuthServer authServer;
 
   @override
   Future prepare() async {
@@ -33,6 +37,9 @@ class BtdChannel extends ApplicationChannel {
       config.database.databaseName);
 
     context = ManagedContext(dataModel, persistentStore);
+
+    final authStorage = ManagedAuthDelegate<User>(context);
+    authServer = AuthServer(authStorage);
   }
 
   @override
