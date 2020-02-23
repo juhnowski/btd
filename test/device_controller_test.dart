@@ -17,10 +17,12 @@ import 'harness/app.dart';
 void main() {
   final harness = Harness()..install();
 
-  test("GET /devices return 404", () async {
+  test("GET /devices return 401 for unautorised request", () async {
+
     final response = await harness.agent.get("/devices/1");
     expectResponse(response, 404);
   });
+
 
   test("GET /devices after post return 200 OK", () async {
     final resp = await harness.agent.post("/devices", body: {
@@ -42,7 +44,7 @@ void main() {
   });
   });
 
-  test("POST /devices doble time returns 409", () async {
+  test("POST /devices duble time returns 409", () async {
   await harness.agent.post("/devices", body: {
     "name": "Fred"
   });

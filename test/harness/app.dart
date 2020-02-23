@@ -14,6 +14,7 @@
 
 import 'package:btd/btd.dart';
 import 'package:aqueduct_test/aqueduct_test.dart';
+import 'package:btd/model/user.dart';
 
 export 'package:btd/btd.dart';
 export 'package:aqueduct_test/aqueduct_test.dart';
@@ -33,17 +34,33 @@ export 'package:aqueduct/aqueduct.dart';
 ///           });
 ///         }
 ///
-class Harness extends TestHarness<BtdChannel>  with TestHarnessORMMixin {
+class Harness extends TestHarness<BtdChannel>  with TestHarnessAuthMixin<BtdChannel>, TestHarnessORMMixin {
   @override
   ManagedContext get context => channel.context;
+  
+  @override
+  AuthServer get authServer => channel.authServer;
+  
+  Agent publicAgent;
 
   @override
   Future onSetUp() async {
     await resetData();
+    publicAgent = await addClient("sites.google.com/view/burntreatmentdevice");
   }
 
   @override
   Future onTearDown() async {
 
+  }
+
+  Future<Agent> registerUser(User user, {Agent withClient}) async {
+    withClient ??= publicAgent;
+
+    final req = withClient.request("/register")
+      ..body = {"username": user.username, "password": user.password};
+    await req.post();
+
+    return loginUser(withClient, user.username, user.password);
   }
 }
