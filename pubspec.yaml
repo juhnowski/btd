@@ -1,0 +1,14 @@
+name: btd
+description: BTD - burn treatment device software - remote control burn treatment devices
+version: 0.0.1
+author: Ilya Yukhnovskiy <juhnowski@gmail.com>
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  aqueduct: ^3.0.0
+
+dev_dependencies:
+  test: ^1.0.0
+  aqueduct_test: ^1.0.0
